@@ -1,0 +1,239 @@
+cmake_minimum_required(VERSION 3.15)
+project(Grbl_Esp32)
+
+set(CMAKE_CXX_STANDARD 14)
+set(MACHINE_FILENAME midtbot)
+
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp32-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp32-Server)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp8266-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp8266-Server)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Minimal-Esp32-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Minimal-Esp8266-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Secured-Esp32-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Secured-Esp8266-Client)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/wscrypto)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/esp32)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/esp8266)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/generic_esp)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/linux)
+include_directories(.pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/windows)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Calibrate_spreadCycle)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Live_tune)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Simple)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Software_SPI)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard_TMC2209)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard_TMC2660)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/TMC_AccelStepper)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src)
+include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source)
+include_directories(embedded)
+include_directories(Grbl_Esp32)
+include_directories(Grbl_Esp32/Machines)
+include_directories(libraries/arduinoWebSockets/src)
+include_directories(libraries/arduinoWebSockets/src/libb64)
+include_directories(libraries/arduinoWebSockets/src/libsha1)
+include_directories(libraries/ESP32SSDP)
+
+add_executable(Grbl_Esp32
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp32-Client/Esp32-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp32-Server/Esp32-Server.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp8266-Client/Esp8266-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp8266-Server/Esp8266-Server.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Minimal-Esp32-Client/Minimal-Esp32-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Minimal-Esp8266-Client/Minimal-Esp8266-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Secured-Esp32-Client/Secured-Esp32-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Secured-Esp8266-Client/Secured-Esp8266-Client.ino
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/wscrypto/base64.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/wscrypto/crypto.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/wscrypto/sha1.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/data_frame.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/websockets_endpoint.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/internals/ws_common.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/esp32/esp32_tcp.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/esp8266/esp8266_tcp.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/generic_esp/generic_esp_clients.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/linux/linux_tcp_client.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/linux/linux_tcp_server.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/windows/win_tcp_client.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/windows/win_tcp_server.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/tcp_client.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/tcp_server.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/network/tcp_socket.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/client.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/message.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/server.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/tiny_websockets/ws_config_defs.hpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/ArduinoWebsockets.h
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/crypto.cpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/message.cpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/websockets_client.cpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/websockets_endpoint.cpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/websockets_server.cpp
+        .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/src/ws_common.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Calibrate_spreadCycle/Calibrate_spreadCycle.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Live_tune/Live_tune.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Simple/Simple.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/Software_SPI/Software_SPI.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard/StallGuard.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard_TMC2209/StallGuard_TMC2209.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/StallGuard_TMC2660/StallGuard_TMC2660.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/examples/TMC_AccelStepper/TMC_AccelStepper.ino
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/CHOPCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/COOLCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/DRV_CONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/DRV_STATUS.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/DRVCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/DRVCTRL.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/DRVSTATUS.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/ENCMODE.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/GCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/IHOLD_IRUN.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/PWMCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/RAMP_STAT.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SERIAL_SWITCH.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SERIAL_SWITCH.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SGCSCONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SHORT_CONF.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SMARTEN.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SW_MODE.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SW_SPI.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/SW_SPI.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2130_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2130Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2160_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2160Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2208_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2208Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2209_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2209Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2660_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC2660Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC5130_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC5130Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC5160_bitfields.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC5160Stepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC_MACROS.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMC_platforms.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source/TMCStepper.cpp
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/TMCStepper.h
+        .pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/TMCStepper_UTILITY.h
+        embedded/embedded.h
+        Grbl_Esp32/Custom/atari_1020.cpp
+        Grbl_Esp32/Custom/custom_code_template.cpp
+        Grbl_Esp32/Custom/polar_coaster.cpp
+        Grbl_Esp32/Machines/3axis_v3.h
+        Grbl_Esp32/Machines/3axis_v4.h
+        Grbl_Esp32/Machines/3axis_xyx.h
+        Grbl_Esp32/Machines/4axis_external_driver.h
+        Grbl_Esp32/Machines/add_esc_spindle.h
+        Grbl_Esp32/Machines/atari_1020.h
+        Grbl_Esp32/Machines/custom_machine_template.h
+        Grbl_Esp32/Machines/espduino.h
+        Grbl_Esp32/Machines/foo_6axis.h
+        Grbl_Esp32/Machines/lowrider_v1p2.h
+        Grbl_Esp32/Machines/midtbot.h
+        Grbl_Esp32/Machines/mpcnc_v1p1.h
+        Grbl_Esp32/Machines/mpcnc_v1p2.h
+        Grbl_Esp32/Machines/pen_laser.h
+        Grbl_Esp32/Machines/polar_coaster.h
+        Grbl_Esp32/Machines/servo_axis.h
+        Grbl_Esp32/Machines/spi_daisy_4axis_xyyz.h
+        Grbl_Esp32/Machines/spi_daisy_4axis_xyz.h
+        Grbl_Esp32/Machines/spi_daisy_4axis_xyza.h
+        Grbl_Esp32/Machines/template.h
+        Grbl_Esp32/Machines/test_drive.h
+        Grbl_Esp32/Machines/tmc2130_pen.h
+        Grbl_Esp32/BTconfig.cpp
+        Grbl_Esp32/BTconfig.h
+        Grbl_Esp32/commands.cpp
+        Grbl_Esp32/commands.h
+        Grbl_Esp32/config.h
+        Grbl_Esp32/coolant_control.cpp
+        Grbl_Esp32/coolant_control.h
+        Grbl_Esp32/cpu_map.h
+        Grbl_Esp32/custom_code.cpp
+        Grbl_Esp32/defaults.h
+        Grbl_Esp32/espresponse.cpp
+        Grbl_Esp32/espresponse.h
+        Grbl_Esp32/gcode.cpp
+        Grbl_Esp32/gcode.h
+        Grbl_Esp32/grbl.h
+        Grbl_Esp32/grbl_eeprom.cpp
+        Grbl_Esp32/grbl_eeprom.h
+        Grbl_Esp32/Grbl_Esp32.ino
+        Grbl_Esp32/grbl_limits.cpp
+        Grbl_Esp32/grbl_limits.h
+        Grbl_Esp32/grbl_sd.cpp
+        Grbl_Esp32/grbl_sd.h
+        Grbl_Esp32/grbl_trinamic.cpp
+        Grbl_Esp32/grbl_trinamic.h
+        Grbl_Esp32/grbl_unipolar.cpp
+        Grbl_Esp32/grbl_unipolar.h
+        Grbl_Esp32/inputbuffer.cpp
+        Grbl_Esp32/inputbuffer.h
+        Grbl_Esp32/jog.cpp
+        Grbl_Esp32/jog.h
+        Grbl_Esp32/machine.h
+        Grbl_Esp32/machine_common.h
+        Grbl_Esp32/motion_control.cpp
+        Grbl_Esp32/motion_control.h
+        Grbl_Esp32/nofile.h
+        Grbl_Esp32/notifications_service.cpp
+        Grbl_Esp32/notifications_service.h
+        Grbl_Esp32/nuts_bolts.cpp
+        Grbl_Esp32/nuts_bolts.h
+        Grbl_Esp32/planner.cpp
+        Grbl_Esp32/planner.h
+        Grbl_Esp32/print.cpp
+        Grbl_Esp32/print.h
+        Grbl_Esp32/probe.cpp
+        Grbl_Esp32/probe.h
+        Grbl_Esp32/protocol.cpp
+        Grbl_Esp32/protocol.h
+        Grbl_Esp32/report.cpp
+        Grbl_Esp32/report.h
+        Grbl_Esp32/serial.cpp
+        Grbl_Esp32/serial.h
+        Grbl_Esp32/serial2socket.cpp
+        Grbl_Esp32/serial2socket.h
+        Grbl_Esp32/servo_axis.cpp
+        Grbl_Esp32/servo_axis.h
+        Grbl_Esp32/settings.cpp
+        Grbl_Esp32/settings.h
+        Grbl_Esp32/solenoid_pen.cpp
+        Grbl_Esp32/solenoid_pen.h
+        Grbl_Esp32/spindle_control.cpp
+        Grbl_Esp32/spindle_control.h
+        Grbl_Esp32/stepper.cpp
+        Grbl_Esp32/stepper.h
+        Grbl_Esp32/system.cpp
+        Grbl_Esp32/system.h
+        Grbl_Esp32/tdef.h
+        Grbl_Esp32/telnet_server.cpp
+        Grbl_Esp32/telnet_server.h
+        Grbl_Esp32/web_server.cpp
+        Grbl_Esp32/web_server.h
+        Grbl_Esp32/wificonfig.cpp
+        Grbl_Esp32/wificonfig.h
+        Grbl_Esp32/wifiservices.cpp
+        Grbl_Esp32/wifiservices.h
+        libraries/arduinoWebSockets/src/libb64/cdecode.c
+        libraries/arduinoWebSockets/src/libb64/cdecode_inc.h
+        libraries/arduinoWebSockets/src/libb64/cencode.c
+        libraries/arduinoWebSockets/src/libb64/cencode_inc.h
+        libraries/arduinoWebSockets/src/libsha1/libsha1.c
+        libraries/arduinoWebSockets/src/libsha1/libsha1.h
+        libraries/arduinoWebSockets/src/WebSockets.cpp
+        libraries/arduinoWebSockets/src/WebSockets.h
+        libraries/arduinoWebSockets/src/WebSocketsClient.cpp
+        libraries/arduinoWebSockets/src/WebSocketsClient.h
+        libraries/arduinoWebSockets/src/WebSocketsServer.cpp
+        libraries/arduinoWebSockets/src/WebSocketsServer.h
+        libraries/ESP32SSDP/ESP32SSDP.cpp
+        libraries/ESP32SSDP/ESP32SSDP.h)

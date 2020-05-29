@@ -113,3 +113,6 @@
 #define DEFAULT_X_MAX_TRAVEL 100.0 // mm NOTE: Must be a positive value.
 #define DEFAULT_Y_MAX_TRAVEL 100.0 // mm NOTE: Must be a positive value.
 #define DEFAULT_Z_MAX_TRAVEL 100.0 // This is percent in servo mode
+
+// Custom stuff
+#define SPINDLE_ENABLE_PIN      GPIO_NUM_33
