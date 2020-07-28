@@ -36,6 +36,7 @@
 #define SPINDLE_TYPE_DAC        4
 #define SPINDLE_TYPE_HUANYANG   5
 #define SPINDLE_TYPE_BESC       6
+#define SPINDLE_TYPE_10V        7
 
 #ifndef SPINDLE_CLASS_H
 #define SPINDLE_CLASS_H
@@ -61,6 +62,8 @@ class Spindle {
     virtual void spindle_sync(uint8_t state, uint32_t rpm);
 
     bool is_reversable;
+    bool use_delays;    // will SpinUp and SpinDown delays be used.
+    uint8_t _current_state;
 };
 
 // This is a dummy spindle that has no I/O.
@@ -85,12 +88,14 @@ class PWMSpindle : public Spindle {
     void stop();
     void config_message();
 
-  private:
-
-    int32_t _current_pwm_duty;
+  private:   
     void set_spindle_dir_pin(bool Clockwise);
 
-  protected:
+
+  
+  protected:    
+  
+    int32_t _current_pwm_duty;
     uint32_t _min_rpm;
     uint32_t _max_rpm;
     uint32_t _pwm_off_value;
@@ -146,11 +151,12 @@ class DacSpindle : public PWMSpindle {
 class HuanyangSpindle : public Spindle {
   private:
     uint16_t  ModRTU_CRC(char* buf, int len);
-    void add_ModRTU_CRC(char* buf, int full_msg_len);
-    bool set_mode(uint8_t mode);
+    
+    bool set_mode(uint8_t mode, bool critical);
+    
     bool get_pins_and_settings();
 
-    uint32_t _current_pwm_rpm;
+    uint32_t _current_rpm;
     uint8_t _txd_pin;
     uint8_t _rxd_pin;
     uint8_t _rts_pin;
@@ -167,6 +173,9 @@ class HuanyangSpindle : public Spindle {
     uint8_t get_state();
     uint32_t set_rpm(uint32_t rpm);
     void stop();
+    static uint16_t read_rpm();
+    static void add_ModRTU_CRC(char* buf, int full_msg_len);
+    
 
 
 };
@@ -176,6 +185,24 @@ class BESCSpindle : public PWMSpindle {
     void init();
     void config_message();
     uint32_t set_rpm(uint32_t rpm);
+};
+
+class _10vSpindle : public PWMSpindle {
+  public:
+    void init();
+    void config_message();
+    uint32_t set_rpm(uint32_t rpm);
+    uint8_t _forward_pin;
+    uint8_t _reverse_pin;
+
+    //void set_state(uint8_t state, uint32_t rpm);
+
+    uint8_t get_state();
+    void stop();
+ protected:
+    void set_enable_pin(bool enable_pin);
+    void set_spindle_dir_pin(bool Clockwise);
+
 };
 
 extern Spindle* spindle;
@@ -188,8 +215,9 @@ extern Laser laser;
 extern DacSpindle dac_spindle;
 extern HuanyangSpindle huanyang_spindle;
 extern BESCSpindle besc_spindle;
+extern _10vSpindle _10v_spindle;
 
-void spindle_select(uint8_t spindletype);
+void spindle_select();
 
 // in HuanyangSpindle.cpp
 void vfd_cmd_task(void* pvParameters);

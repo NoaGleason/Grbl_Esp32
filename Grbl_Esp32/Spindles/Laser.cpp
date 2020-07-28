@@ -31,9 +31,11 @@ bool Laser :: isRateAdjusted() {
 void Laser :: config_message() {
     grbl_msg_sendf(CLIENT_SERIAL,
                    MSG_LEVEL_INFO,
-                   "Laser spindle on GPIO:%d, Freq:%.2fHz, Res:%dbits Laser mode:$32=%d",
-                   report_pin_number(_output_pin),
+                   "Laser spindle on Pin:%s, Freq:%.2fHz, Res:%dbits Laser mode:$32=%d",
+                   pinName(_output_pin).c_str(),
                    _pwm_freq,
                    _pwm_precision,
                    isRateAdjusted());  // the current mode
+
+    use_delays = false; // this will override the value set in PWMSpindle intit()
 }
