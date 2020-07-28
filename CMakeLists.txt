@@ -131,9 +131,7 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/Machines/3axis_v4.h
         Grbl_Esp32/Machines/3axis_xyx.h
         Grbl_Esp32/Machines/4axis_external_driver.h
-        Grbl_Esp32/Machines/add_esc_spindle.h
         Grbl_Esp32/Machines/atari_1020.h
-        Grbl_Esp32/Machines/custom_machine_template.h
         Grbl_Esp32/Machines/espduino.h
         Grbl_Esp32/Machines/foo_6axis.h
         Grbl_Esp32/Machines/lowrider_v1p2.h
@@ -208,8 +206,6 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/settings.h
         Grbl_Esp32/solenoid_pen.cpp
         Grbl_Esp32/solenoid_pen.h
-        Grbl_Esp32/spindle_control.cpp
-        Grbl_Esp32/spindle_control.h
         Grbl_Esp32/stepper.cpp
         Grbl_Esp32/stepper.h
         Grbl_Esp32/system.cpp
