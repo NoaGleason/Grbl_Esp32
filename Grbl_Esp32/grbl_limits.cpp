@@ -116,13 +116,15 @@ void limits_go_home(uint8_t cycle_mask) {
             if (bit_istrue(cycle_mask, bit(idx))) {
                 n_active_axis++;
 #ifdef COREXY
+                auto a_steps = axis_settings[A_MOTOR]->steps_per_mm->get();
+                auto b_steps = axis_settings[B_MOTOR]->steps_per_mm->get();
+                int32_t old_a_position = sys_position[A_MOTOR];
                 if (idx == X_AXIS) {
-                    int32_t axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-                    sys_position[A_MOTOR] = axis_position;
-                    sys_position[B_MOTOR] = -axis_position;
+                    sys_position[A_MOTOR] = lround((sys_position[A_MOTOR] - sys_position[B_MOTOR] * a_steps / b_steps)/2.);
+                    sys_position[B_MOTOR] = lround((sys_position[B_MOTOR] - old_a_position * b_steps / a_steps)/2.);
                 } else if (idx == Y_AXIS) {
-                    int32_t axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-                    sys_position[A_MOTOR] = sys_position[B_MOTOR] = axis_position;
+                    sys_position[A_MOTOR] = lround((sys_position[A_MOTOR] + sys_position[B_MOTOR] * a_steps / b_steps)/2.);
+                    sys_position[B_MOTOR] = lround((sys_position[B_MOTOR] + old_a_position * b_steps / a_steps)/2.);
                 } else
                     sys_position[Z_AXIS] = 0;
 #else
@@ -216,7 +218,7 @@ void limits_go_home(uint8_t cycle_mask) {
     // set up pull-off maneuver from axes limit switches that have been homed. This provides
     // some initial clearance off the switches and should also help prevent them from falsely
     // triggering when hard limits are enabled or when more than one axes shares a limit pin.
-    int32_t set_axis_position;
+    float set_axis_position;
     // Set machine positions for homed limit switches. Don't update non-homed axes.
     auto mask = homing_dir_mask->get();
     auto pulloff = homing_pulloff->get();
@@ -231,29 +233,34 @@ void limits_go_home(uint8_t cycle_mask) {
 #ifdef HOMING_FORCE_POSITIVE_SPACE
                 set_axis_position = 0; //lround(settings.homing_pulloff*settings.steps_per_mm[idx]);
 #else
-                set_axis_position = lround((-travel + pulloff) * steps);
+                set_axis_position = -travel + pulloff;
 #endif
             } else {
 #ifdef HOMING_FORCE_POSITIVE_SPACE
-                set_axis_position = lround((-travel - pulloff) * steps);
+                set_axis_position = -travel - pulloff;
 #else
-                set_axis_position = lround(-pulloff * steps);
+                set_axis_position = -pulloff;
 #endif
             }
 #endif
 #ifdef COREXY
+            auto a_steps = axis_settings[A_MOTOR]->steps_per_mm->get();
+            auto b_steps = axis_settings[B_MOTOR]->steps_per_mm->get();
+            int32_t old_a_position = sys_position[A_MOTOR];
             if (idx == X_AXIS) {
-                int32_t off_axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-                sys_position[A_MOTOR] = set_axis_position + off_axis_position;
-                sys_position[B_MOTOR] = set_axis_position - off_axis_position;
+                sys_position[A_MOTOR] = lround(set_axis_position * a_steps +
+                        (sys_position[A_MOTOR] - sys_position[B_MOTOR] * a_steps/b_steps)/2.);
+                sys_position[B_MOTOR] = lround(set_axis_position * b_steps +
+                        (sys_position[B_MOTOR] - old_a_position * b_steps/a_steps)/2.);
             } else if (idx == Y_AXIS) {
-                int32_t off_axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-                sys_position[A_MOTOR] = off_axis_position + set_axis_position;
-                sys_position[B_MOTOR] = off_axis_position - set_axis_position;
+                sys_position[A_MOTOR] = lround(set_axis_position * a_steps +
+                        (sys_position[A_MOTOR] + sys_position[B_MOTOR] * a_steps/b_steps)/2.);
+                sys_position[B_MOTOR] = lround(-set_axis_position * b_steps +
+                        (sys_position[B_MOTOR] + old_a_position * b_steps/a_steps)/2.);
             } else
-                sys_position[idx] = set_axis_position;
+                sys_position[idx] = lround(set_axis_position*steps);
 #else
-            sys_position[idx] = set_axis_position;
+            sys_position[idx] = lround(set_axis_position*steps);
 #endif
         }
     }

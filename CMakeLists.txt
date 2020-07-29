@@ -35,10 +35,14 @@ include_directories(.pio/libdeps/nodemcu-32s/TMCStepper_ID5513/src/source)
 include_directories(embedded)
 include_directories(Grbl_Esp32)
 include_directories(Grbl_Esp32/Machines)
+include_directories(Grbl_Esp32/Motors)
 include_directories(libraries/arduinoWebSockets/src)
 include_directories(libraries/arduinoWebSockets/src/libb64)
 include_directories(libraries/arduinoWebSockets/src/libsha1)
 include_directories(libraries/ESP32SSDP)
+
+file(GLOB SRC_FILES Grbl_Esp32/*.cpp)
+file(GLOB HEADER_FILES Grbl_Esp32/*.h)
 
 add_executable(Grbl_Esp32
         .pio/libdeps/nodemcu-32s/ArduinoWebsockets_ID6149/examples/Esp32-Client/Esp32-Client.ino
@@ -146,74 +150,10 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/Machines/template.h
         Grbl_Esp32/Machines/test_drive.h
         Grbl_Esp32/Machines/tmc2130_pen.h
-        Grbl_Esp32/BTconfig.cpp
-        Grbl_Esp32/BTconfig.h
-        Grbl_Esp32/commands.cpp
-        Grbl_Esp32/commands.h
-        Grbl_Esp32/config.h
-        Grbl_Esp32/coolant_control.cpp
-        Grbl_Esp32/coolant_control.h
-        Grbl_Esp32/cpu_map.h
-        Grbl_Esp32/custom_code.cpp
-        Grbl_Esp32/defaults.h
-        Grbl_Esp32/espresponse.cpp
-        Grbl_Esp32/espresponse.h
-        Grbl_Esp32/gcode.cpp
-        Grbl_Esp32/gcode.h
-        Grbl_Esp32/grbl.h
-        Grbl_Esp32/grbl_eeprom.cpp
-        Grbl_Esp32/grbl_eeprom.h
-        Grbl_Esp32/Grbl_Esp32.ino
-        Grbl_Esp32/grbl_limits.cpp
-        Grbl_Esp32/grbl_limits.h
-        Grbl_Esp32/grbl_sd.cpp
-        Grbl_Esp32/grbl_sd.h
-        Grbl_Esp32/inputbuffer.cpp
-        Grbl_Esp32/inputbuffer.h
-        Grbl_Esp32/jog.cpp
-        Grbl_Esp32/jog.h
-        Grbl_Esp32/machine.h
-        Grbl_Esp32/machine_common.h
-        Grbl_Esp32/motion_control.cpp
-        Grbl_Esp32/motion_control.h
-        Grbl_Esp32/nofile.h
-        Grbl_Esp32/notifications_service.cpp
-        Grbl_Esp32/notifications_service.h
-        Grbl_Esp32/nuts_bolts.cpp
-        Grbl_Esp32/nuts_bolts.h
-        Grbl_Esp32/planner.cpp
-        Grbl_Esp32/planner.h
-        Grbl_Esp32/print.cpp
-        Grbl_Esp32/print.h
-        Grbl_Esp32/probe.cpp
-        Grbl_Esp32/probe.h
-        Grbl_Esp32/protocol.cpp
-        Grbl_Esp32/protocol.h
-        Grbl_Esp32/report.cpp
-        Grbl_Esp32/report.h
-        Grbl_Esp32/serial.cpp
-        Grbl_Esp32/serial.h
-        Grbl_Esp32/serial2socket.cpp
-        Grbl_Esp32/serial2socket.h
-        Grbl_Esp32/settings.cpp
-        Grbl_Esp32/settings.h
-        Grbl_Esp32/solenoid_pen.cpp
-        Grbl_Esp32/solenoid_pen.h
-        Grbl_Esp32/stepper.cpp
-        Grbl_Esp32/stepper.h
-        Grbl_Esp32/system.cpp
-        Grbl_Esp32/system.h
-        Grbl_Esp32/tdef.h
-        Grbl_Esp32/telnet_server.cpp
-        Grbl_Esp32/telnet_server.h
-        Grbl_Esp32/web_server.cpp
-        Grbl_Esp32/web_server.h
-        Grbl_Esp32/wificonfig.cpp
-        Grbl_Esp32/wificonfig.h
-        Grbl_Esp32/wifiservices.cpp
-        Grbl_Esp32/wifiservices.h
-        Grbl_Esp32/SettingsDefinitions.cpp
-        Grbl_Esp32/SettingsDefinitions.h
+        ${SRC_FILES}
+        ${HEADER_FILES}
+        Grbl_Esp32/Motors/MotorClass.cpp
+        Grbl_Esp32/Motors/MotorClass.h
         libraries/arduinoWebSockets/src/libb64/cdecode.c
         libraries/arduinoWebSockets/src/libb64/cdecode_inc.h
         libraries/arduinoWebSockets/src/libb64/cencode.c

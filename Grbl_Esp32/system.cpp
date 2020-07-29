@@ -209,9 +209,11 @@ float system_convert_axis_steps_to_mpos(int32_t* steps, uint8_t idx) {
     float steps_per_mm = axis_settings[idx]->steps_per_mm->get();
 #ifdef COREXY
     if (idx == X_AXIS)
-        pos = (float)system_convert_corexy_to_x_axis_steps(steps) / steps_per_mm;
+        pos = (steps[A_MOTOR] / axis_settings[A_MOTOR]->steps_per_mm->get() +
+                steps[B_MOTOR] / axis_settings[B_MOTOR]->steps_per_mm->get())/2.;
     else if (idx == Y_AXIS)
-        pos = (float)system_convert_corexy_to_y_axis_steps(steps) / steps_per_mm;
+        pos = (steps[A_MOTOR] / axis_settings[A_MOTOR]->steps_per_mm->get() -
+                steps[B_MOTOR] / axis_settings[B_MOTOR]->steps_per_mm->get())/2.;
     else
         pos = steps[idx] / steps_per_mm;
 #else
