@@ -300,8 +300,6 @@ uint8_t plan_buffer_line(float* target, plan_line_data_t* pl_data) {
 #ifdef COREXY
     target_steps[A_MOTOR] = lround((target[X_AXIS] + target[Y_AXIS]) * axis_settings[A_MOTOR]->steps_per_mm->get());
     target_steps[B_MOTOR] = lround((target[X_AXIS] - target[Y_AXIS]) * axis_settings[B_MOTOR]->steps_per_mm->get());
-    block->steps[A_MOTOR] = labs(target_steps[A_MOTOR] - sys_position[A_MOTOR]);
-    block->steps[B_MOTOR] = labs(target_steps[B_MOTOR] - sys_position[B_MOTOR]);
 #endif
     for (idx = 0; idx < N_AXIS; idx++) {
         // Calculate target position in absolute steps, number of steps for each axis, and determine max step events.
@@ -314,7 +312,6 @@ uint8_t plan_buffer_line(float* target, plan_line_data_t* pl_data) {
 #else
         target_steps[idx] = lround(target[idx] * axis_settings[idx]->steps_per_mm->get());
 #endif
-        target_steps[idx] = lround(target[idx] * axis_settings[idx]->steps_per_mm->get());
         block->steps[idx] = labs(target_steps[idx] - position_steps[idx]);
         block->step_event_count = MAX(block->step_event_count, block->steps[idx]);
         delta_mm = (target_steps[idx] - position_steps[idx]) / axis_settings[idx]->steps_per_mm->get();
