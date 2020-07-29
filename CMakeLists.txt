@@ -140,7 +140,6 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/Machines/mpcnc_v1p2.h
         Grbl_Esp32/Machines/pen_laser.h
         Grbl_Esp32/Machines/polar_coaster.h
-        Grbl_Esp32/Machines/servo_axis.h
         Grbl_Esp32/Machines/spi_daisy_4axis_xyyz.h
         Grbl_Esp32/Machines/spi_daisy_4axis_xyz.h
         Grbl_Esp32/Machines/spi_daisy_4axis_xyza.h
@@ -169,10 +168,6 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/grbl_limits.h
         Grbl_Esp32/grbl_sd.cpp
         Grbl_Esp32/grbl_sd.h
-        Grbl_Esp32/grbl_trinamic.cpp
-        Grbl_Esp32/grbl_trinamic.h
-        Grbl_Esp32/grbl_unipolar.cpp
-        Grbl_Esp32/grbl_unipolar.h
         Grbl_Esp32/inputbuffer.cpp
         Grbl_Esp32/inputbuffer.h
         Grbl_Esp32/jog.cpp
@@ -200,8 +195,6 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/serial.h
         Grbl_Esp32/serial2socket.cpp
         Grbl_Esp32/serial2socket.h
-        Grbl_Esp32/servo_axis.cpp
-        Grbl_Esp32/servo_axis.h
         Grbl_Esp32/settings.cpp
         Grbl_Esp32/settings.h
         Grbl_Esp32/solenoid_pen.cpp
@@ -219,6 +212,8 @@ add_executable(Grbl_Esp32
         Grbl_Esp32/wificonfig.h
         Grbl_Esp32/wifiservices.cpp
         Grbl_Esp32/wifiservices.h
+        Grbl_Esp32/SettingsDefinitions.cpp
+        Grbl_Esp32/SettingsDefinitions.h
         libraries/arduinoWebSockets/src/libb64/cdecode.c
         libraries/arduinoWebSockets/src/libb64/cdecode_inc.h
         libraries/arduinoWebSockets/src/libb64/cencode.c

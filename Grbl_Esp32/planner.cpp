@@ -295,19 +295,13 @@ uint8_t plan_buffer_line(float* target, plan_line_data_t* pl_data) {
     uint8_t idx;
     // Copy position data based on type of motion being planned.
     if (block->condition & PL_COND_FLAG_SYSTEM_MOTION) {
-#ifdef COREXY
-        position_steps[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
-        position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
-        position_steps[Z_AXIS] = sys_position[Z_AXIS];
-#else
         memcpy(position_steps, sys_position, sizeof(sys_position));
-#endif
     } else  memcpy(position_steps, pl.position, sizeof(pl.position));
 #ifdef COREXY
-    target_steps[A_MOTOR] = lround(target[A_MOTOR] * axis_settings[A_MOTOR]->steps_per_mm->get());
-    target_steps[B_MOTOR] = lround(target[B_MOTOR] * axis_settings[B_MOTOR]->steps_per_mm->get());
-    block->steps[A_MOTOR] = labs((target_steps[X_AXIS] - position_steps[X_AXIS]) + (target_steps[Y_AXIS] - position_steps[Y_AXIS]));
-    block->steps[B_MOTOR] = labs((target_steps[X_AXIS] - position_steps[X_AXIS]) - (target_steps[Y_AXIS] - position_steps[Y_AXIS]));
+    target_steps[A_MOTOR] = lround((target[X_AXIS] + target[Y_AXIS]) * axis_settings[A_MOTOR]->steps_per_mm->get());
+    target_steps[B_MOTOR] = lround((target[X_AXIS] - target[Y_AXIS]) * axis_settings[B_MOTOR]->steps_per_mm->get());
+    block->steps[A_MOTOR] = labs(target_steps[A_MOTOR] - sys_position[A_MOTOR]);
+    block->steps[B_MOTOR] = labs(target_steps[B_MOTOR] - sys_position[B_MOTOR]);
 #endif
     for (idx = 0; idx < N_AXIS; idx++) {
         // Calculate target position in absolute steps, number of steps for each axis, and determine max step events.
@@ -316,21 +310,14 @@ uint8_t plan_buffer_line(float* target, plan_line_data_t* pl_data) {
 #ifdef COREXY
         if (!(idx == A_MOTOR) && !(idx == B_MOTOR)) {
             target_steps[idx] = lround(target[idx] * axis_settings[idx]->steps_per_mm->get());
-            block->steps[idx] = labs(target_steps[idx] - position_steps[idx]);
         }
-        block->step_event_count = MAX(block->step_event_count, block->steps[idx]);
-        if (idx == A_MOTOR)
-            delta_mm = (target_steps[X_AXIS] - position_steps[X_AXIS] + target_steps[Y_AXIS] - position_steps[Y_AXIS]) / axis_settings[idx]->steps_per_mm->get();
-        else if (idx == B_MOTOR)
-            delta_mm = (target_steps[X_AXIS] - position_steps[X_AXIS] - target_steps[Y_AXIS] + position_steps[Y_AXIS]) / axis_settings[idx]->steps_per_mm->get();
-        else
-            delta_mm = (target_steps[idx] - position_steps[idx]) / axis_settings[idx]->steps_per_mm->get();
 #else
+        target_steps[idx] = lround(target[idx] * axis_settings[idx]->steps_per_mm->get());
+#endif
         target_steps[idx] = lround(target[idx] * axis_settings[idx]->steps_per_mm->get());
         block->steps[idx] = labs(target_steps[idx] - position_steps[idx]);
         block->step_event_count = MAX(block->step_event_count, block->steps[idx]);
         delta_mm = (target_steps[idx] - position_steps[idx]) / axis_settings[idx]->steps_per_mm->get();
-#endif
         unit_vec[idx] = delta_mm; // Store unit vector numerator
         // Set direction bits. Bit enabled always means direction is negative.
         if (delta_mm < 0.0)  block->direction_bits |= get_direction_pin_mask(idx);
