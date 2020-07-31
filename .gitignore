@@ -10,4 +10,3 @@ embedded/dist
 .vscode/
 .history/
 *.pyc
-cmake-build-debug/

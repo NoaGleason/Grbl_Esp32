@@ -503,7 +503,7 @@ Some features should not be changed. See notes below.
 // this delay will increase the maximum dwell time linearly, but also reduces the responsiveness of
 // run-time command executions, like status reports, since these are performed between each dwell
 // time step. Also, keep in mind that the Arduino delay timer is not very accurate for long delays.
-#define DWELL_TIME_STEP 5 // Integer (1-255) (milliseconds)
+#define DWELL_TIME_STEP 50 // Integer (1-255) (milliseconds)
 
 
 // For test use only. This uses the ESP32's RMT peripheral to generate step pulses
