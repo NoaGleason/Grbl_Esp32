@@ -51,6 +51,7 @@ EnumSetting* spindle_type;
 
 enum_opt_t spindleTypes = {
     { "NONE", SPINDLE_TYPE_NONE, },
+    { "SERIAL", SPINDLE_TYPE_SERIAL},
     { "PWM", SPINDLE_TYPE_PWM, },
     { "RELAY", SPINDLE_TYPE_RELAY, },
     { "LASER", SPINDLE_TYPE_LASER, },

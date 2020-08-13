@@ -47,7 +47,7 @@ DacSpindle dac_spindle;
 HuanyangSpindle huanyang_spindle;
 BESCSpindle besc_spindle;
 _10vSpindle _10v_spindle;
-
+SerialSpindle serial_spindle;
 
 void spindle_select() {
     
@@ -72,6 +72,9 @@ void spindle_select() {
         break;
     case SPINDLE_TYPE_10V:
         spindle = &_10v_spindle;
+        break;
+    case SPINDLE_TYPE_SERIAL:
+        spindle = &serial_spindle;
         break;
     case SPINDLE_TYPE_NONE:
     default:

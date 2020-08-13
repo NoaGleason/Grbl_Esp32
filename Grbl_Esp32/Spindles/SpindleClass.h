@@ -37,6 +37,7 @@
 #define SPINDLE_TYPE_HUANYANG   5
 #define SPINDLE_TYPE_BESC       6
 #define SPINDLE_TYPE_10V        7
+#define SPINDLE_TYPE_SERIAL     8
 
 #ifndef SPINDLE_CLASS_H
 #define SPINDLE_CLASS_H
@@ -76,6 +77,20 @@ class NullSpindle : public Spindle {
     uint8_t get_state();
     void stop();
     void config_message();
+};
+
+// This is a spindle that just sends its set RPM to the serial console.
+class SerialSpindle : public Spindle {
+    public:
+        void init();
+        uint32_t set_rpm(uint32_t rpm);
+        void set_state(uint8_t state, uint32_t rpm);
+        uint8_t get_state();
+        void stop();
+        void config_message();
+
+    protected:
+        uint32_t _last_sent;
 };
 
 // This adds support for PWM
