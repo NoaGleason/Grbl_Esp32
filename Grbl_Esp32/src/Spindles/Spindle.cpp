@@ -38,6 +38,7 @@
 #include "H2ASpindle.h"
 #include "BESCSpindle.h"
 #include "10vSpindle.h"
+#include "SerialSpindle.h"
 
 namespace Spindles {
     // An instance of each type of spindle is created here.
@@ -51,6 +52,7 @@ namespace Spindles {
     H2A      h2a;
     BESC     besc;
     _10v     _10v;
+    Serial   serial;
 
     void Spindle::select() {
         switch (static_cast<SpindleType>(spindle_type->get())) {
@@ -78,6 +80,9 @@ namespace Spindles {
             case SpindleType::H2A:
                 spindle = &h2a;
                 break;
+        	case SpindleType::SERIAL_SPINDLE:
+        		spindle = &serial;
+				break;
             case SpindleType::NONE:
             default:
                 spindle = &null;

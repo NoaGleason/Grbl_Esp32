@@ -38,6 +38,7 @@ enum class SpindleType : int8_t {
     BESC,
     _10V,
     H2A,
+    SERIAL_SPINDLE,
 };
 
 #include "../Grbl.h"

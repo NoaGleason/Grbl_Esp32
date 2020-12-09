@@ -64,5 +64,31 @@
 #define Y_LIMIT_PIN             GPIO_NUM_4
 
 // defaults
-#define DEFAULT_Z_STEPS_PER_MM 100.0    // This is used as the servo calibration
+#define DEFAULT_Z_STEPS_PER_MM 6.25    // This is used as the servo calibration
 #define DEFAULT_Z_MAX_TRAVEL 300.0      // This is used as the servo calibration
+
+#ifndef COREXY // maybe set in config.h
+	#define COREXY
+#endif
+
+#define DEFAULT_SOFT_LIMIT_ENABLE 0 // false
+#define DEFAULT_HARD_LIMIT_ENABLE 0  // true
+
+#define DEFAULT_HOMING_ENABLE           1
+#define DEFAULT_HOMING_DIR_MASK         1
+#define DEFAULT_HOMING_FEED_RATE        200.0 // mm/min
+#define DEFAULT_HOMING_SEEK_RATE        1000.0 // mm/min
+#define DEFAULT_HOMING_DEBOUNCE_DELAY   250 // msec (0-65k)
+#define DEFAULT_HOMING_PULLOFF          3.0 // mm
+
+#define DEFAULT_X_MAX_RATE 8000.0 // mm/min
+#define DEFAULT_Y_MAX_RATE 8000.0 // mm/min
+#define DEFAULT_Z_MAX_RATE 5000.0 // mm/min
+
+#define DEFAULT_X_ACCELERATION 200.0 // mm/sec^2. 200 mm/sec^2 = 720000 mm/min^2
+#define DEFAULT_Y_ACCELERATION 200.0 // mm/sec^2
+
+#define DEFAULT_X_MAX_TRAVEL 150.0 // mm NOTE: Must be a positive value.
+#define DEFAULT_Y_MAX_TRAVEL 150.0 // mm NOTE: Must be a positive value.
+
+#define SPINDLE_TYPE SpindleType::SERIAL_SPINDLE

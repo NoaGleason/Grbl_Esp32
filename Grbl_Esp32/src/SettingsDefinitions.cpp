@@ -59,6 +59,7 @@ EnumSetting* spindle_type;
 enum_opt_t spindleTypes = {
     // clang-format off
     { "NONE", int8_t(SpindleType::NONE) },
+	{ "SERIAL", int8_t(SpindleType::SERIAL_SPINDLE) },
     { "PWM", int8_t(SpindleType::PWM) },
     { "RELAY", int8_t(SpindleType::RELAY) },
     { "LASER", int8_t(SpindleType::LASER) },
